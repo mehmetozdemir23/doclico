@@ -21,9 +21,7 @@ final class ShareMapper
             token: ShareToken::fromString($model->token),
             expiresAt: $model->expires_at?->toDateTimeImmutable(),
             downloadsCount: $model->downloads_count ?? 0,
-            lastDownloadedAt: $model->last_downloaded_at
-            ? new DateTimeImmutable($model->last_downloaded_at)
-            : null,
+            lastDownloadedAt: $model->last_downloaded_at?->toDateTimeImmutable(),
         );
     }
 

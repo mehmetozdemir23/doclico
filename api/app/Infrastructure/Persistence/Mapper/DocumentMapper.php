@@ -9,7 +9,6 @@ use App\Domain\Document\DocumentId;
 use App\Domain\Identity\UserId;
 use App\Domain\Template\TemplateId;
 use App\Infrastructure\Persistence\Eloquent\DocumentModel;
-use DateTimeImmutable;
 
 final class DocumentMapper
 {
@@ -21,9 +20,6 @@ final class DocumentMapper
             templateId: TemplateId::fromInt($model->template_id),
             name: $model->name,
             data: $model->data ?? [],
-            createdAt: $model->created_at ? new DateTimeImmutable($model->created_at->toDateTimeString()) : null,
-            templateName: $model->relationLoaded('template') ? $model->template?->name : null,
-            templateType: $model->relationLoaded('template') ? $model->template?->type : null,
         );
     }
 

@@ -5,17 +5,18 @@ declare(strict_types=1);
 namespace App\Application\Document;
 
 use App\Domain\Document\Document;
+use App\Domain\Template\Template;
 
 final class DocumentResultMapper
 {
-    public static function toResult(Document $document): DocumentResult
+    public static function toResult(Document $document, ?Template $template = null): DocumentResult
     {
-        $template = null;
-        if ($document->templateName !== null) {
-            $template = new DocumentTemplateResult(
-                id: $document->templateId->value,
-                name: $document->templateName,
-                type: $document->templateType ?? '',
+        $templateResult = null;
+        if ($template !== null) {
+            $templateResult = new DocumentTemplateResult(
+                id: $template->id->value,
+                name: $template->name,
+                type: $template->type,
             );
         }
 
@@ -24,17 +25,27 @@ final class DocumentResultMapper
             name: $document->name,
             templateId: $document->templateId->value,
             data: $document->data,
-            createdAt: $document->createdAt?->format('c'),
-            template: $template,
+            template: $templateResult,
         );
     }
 
-    /** @param Document[] $documents */
-    public static function toListResult(array $documents): DocumentListResult
+    /**
+     * @param Document[] $documents
+     * @param Template[] $templates
+     */
+    public static function toListResult(array $documents, array $templates): DocumentListResult
     {
+        $templatesById = [];
+        foreach ($templates as $template) {
+            $templatesById[$template->id->value] = $template;
+        }
+
         return new DocumentListResult(
             documents: array_map(
-                self::toResult(...),
+                fn (Document $doc) => self::toResult(
+                    $doc,
+                    $templatesById[$doc->templateId->value] ?? null
+                ),
                 $documents
             )
         );

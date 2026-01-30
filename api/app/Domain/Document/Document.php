@@ -17,9 +17,6 @@ final readonly class Document
         public TemplateId $templateId,
         public string $name,
         public array $data,
-        public ?DateTimeImmutable $createdAt = null,
-        public ?string $templateName = null,
-        public ?string $templateType = null,
     ) {}
 
     public static function createFromTemplate(

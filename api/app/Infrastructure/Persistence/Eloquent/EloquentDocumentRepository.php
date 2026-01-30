@@ -29,8 +29,7 @@ final class EloquentDocumentRepository implements DocumentRepositoryInterface
 
     public function findByUserId(UserId $userId): array
     {
-        return DocumentModel::with('template')
-            ->where('user_id', $userId->value)
+        return DocumentModel::where('user_id', $userId->value)
             ->latest()
             ->get()
             ->map(fn (DocumentModel $model): Document => DocumentMapper::toDomain($model))

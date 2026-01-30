@@ -31,4 +31,14 @@ final class EloquentTemplateRepository implements TemplateRepositoryInterface
             ->map(fn (TemplateModel $model): Template => TemplateMapper::toDomain($model))
             ->all();
     }
+
+    public function findByIds(array $ids): array
+    {
+        $intIds = array_map(fn (TemplateId $id): int => $id->value, $ids);
+
+        return TemplateModel::whereIn('id', $intIds)
+            ->get()
+            ->map(fn (TemplateModel $model): Template => TemplateMapper::toDomain($model))
+            ->all();
+    }
 }

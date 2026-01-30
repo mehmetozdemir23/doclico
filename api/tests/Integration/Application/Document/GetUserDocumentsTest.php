@@ -40,3 +40,20 @@ it('does not return other users documents', function (): void {
 
     expect($documents->documents)->toHaveCount(2);
 });
+
+it('includes template data in results', function (): void {
+    $user = UserModel::factory()->create();
+    $template = TemplateModel::factory()->create([
+        'name' => 'Test Template',
+        'type' => 'test-type',
+    ]);
+
+    DocumentModel::factory()->for($user, 'user')->for($template, 'template')->create();
+
+    $result = app(GetUserDocuments::class)->execute(UserId::fromString($user->id));
+
+    expect($result->documents)->toHaveCount(1);
+    expect($result->documents[0]->template)->not->toBeNull();
+    expect($result->documents[0]->template->name)->toBe('Test Template');
+    expect($result->documents[0]->template->type)->toBe('test-type');
+});
