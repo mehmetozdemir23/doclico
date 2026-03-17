@@ -13,7 +13,7 @@
           </p>
         </div>
 
-        <registerForm class="space-y-4" @submit.prevent="handleRegister">
+        <form class="space-y-4" @submit.prevent="handleRegister">
           <BaseInput
             id="first_name"
             v-model="registerForm.first_name"
@@ -64,9 +64,32 @@
 
           <BaseAlert v-if="error" :message="error" type="error" />
 
-          <BaseButton type="submit" :disabled="loading" :full-width="true">
+          <div class="flex items-start gap-2.5">
+            <input
+              id="consent"
+              v-model="consent"
+              type="checkbox"
+              required
+              class="mt-0.5 h-4 w-4 rounded border-slate-300 text-slate-900 focus:ring-slate-500 cursor-pointer flex-shrink-0"
+            />
+            <label for="consent" class="text-[13px] text-slate-500 cursor-pointer leading-relaxed">
+              J'accepte la
+              <router-link :to="{ name: 'privacy' }" class="text-slate-900 hover:underline">politique de confidentialité</router-link>
+              et le traitement de mes données personnelles conformément au RGPD.
+            </label>
+          </div>
+
+          <BaseButton type="submit" :disabled="loading || !consent" :full-width="true">
             {{ loading ? "Création..." : "Créer mon compte" }}
           </BaseButton>
+
+          <div class="relative flex items-center gap-3">
+            <div class="flex-1 h-px bg-slate-200"></div>
+            <span class="text-[12px] text-slate-400 flex-shrink-0">ou</span>
+            <div class="flex-1 h-px bg-slate-200"></div>
+          </div>
+
+          <GoogleAuthButton />
 
           <div class="text-center">
             <p class="text-[13px] text-slate-500">
@@ -79,7 +102,7 @@
               </router-link>
             </p>
           </div>
-        </registerForm>
+        </form>
       </div>
     </div>
   </DefaultLayout>
@@ -91,6 +114,7 @@ import { useRouter } from "vue-router";
 import BaseAlert from "@/components/BaseAlert.vue";
 import BaseButton from "@/components/BaseButton.vue";
 import BaseInput from "@/components/BaseInput.vue";
+import GoogleAuthButton from "@/components/GoogleAuthButton.vue";
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
 import { useAuthStore } from "@/stores/auth";
 
@@ -106,16 +130,17 @@ const registerForm = ref({
 });
 const loading = computed(() => authStore.submitting);
 const error = computed(() => authStore.error);
+const consent = ref(false);
 
 const handleRegister = async () => {
   if (registerForm.value.password !== registerForm.value.password_confirmation) {
-    authStore.error = "Les mots de passe ne correspondent pas";
+    authStore.setError("Les mots de passe ne correspondent pas");
     return;
   }
 
-  const success = await authStore.register(registerForm.value);
+  const success = await authStore.register({ ...registerForm.value, consent: consent.value });
   if (success) {
-    router.push("/");
+    router.push("/dashboard");
   }
 };
 </script>

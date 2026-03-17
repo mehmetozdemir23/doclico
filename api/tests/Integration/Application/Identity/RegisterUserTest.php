@@ -26,7 +26,11 @@ it('registers a new user', function (): void {
         'email' => 'john@example.com',
         'first_name' => 'John',
         'last_name' => 'Doe',
+        'consent_policy_version' => RegisterUser::POLICY_VERSION,
     ]);
+
+    $model = UserModel::where('email', 'john@example.com')->first();
+    expect($model->consent_accepted_at)->not->toBeNull();
 });
 
 it('throws exception when email already exists', function (): void {

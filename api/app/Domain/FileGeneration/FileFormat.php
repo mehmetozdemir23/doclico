@@ -13,4 +13,12 @@ enum FileFormat: string
     {
         return $this->value;
     }
+
+    public function mimeType(): string
+    {
+        return match ($this) {
+            self::Pdf => 'application/pdf',
+            self::Docx => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        };
+    }
 }

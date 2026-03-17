@@ -14,7 +14,7 @@ interface TemplateRepositoryInterface
     public function findAll(): array;
 
     /**
-     * @param TemplateId[] $ids
+     * @param  TemplateId[]  $ids
      * @return Template[]
      */
     public function findByIds(array $ids): array;

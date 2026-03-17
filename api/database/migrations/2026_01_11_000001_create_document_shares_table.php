@@ -10,15 +10,17 @@ return new class extends Migration
     {
         Schema::create('document_shares', function (Blueprint $table): void {
             $table->uuid('id')->primary();
-            $table->foreignUuid('document_id')->constrained();
+            $table->foreignUuid('document_id')->constrained()->restrictOnDelete();
             $table->string('token', 64)->unique();
             $table->timestamp('expires_at')->nullable();
-            $table->integer('downloads_count')->default(0);
+            $table->integer('downloads_count');
             $table->timestamp('last_downloaded_at')->nullable();
+            $table->integer('views_count');
+            $table->timestamp('first_viewed_at')->nullable();
+            $table->timestamp('shared_at');
+            $table->index('shared_at');
+            $table->timestamp(column: 'reminded_at')->nullable();
             $table->timestamps();
-
-            $table->index('token');
-            $table->index(['document_id', 'created_at']);
         });
     }
 

@@ -11,7 +11,9 @@ final readonly class DocumentResult
         public string $name,
         public int $templateId,
         public array $data,
-        public ?string $createdAt = null,
+        public string $generatedAt,
         public ?DocumentTemplateResult $template = null,
+        public ?DocumentClientResult $client = null,
+        public ?DocumentShareResult $share = null,
     ) {}
 }

@@ -16,10 +16,11 @@
       :placeholder="placeholder"
       :minlength="minlength"
       :maxlength="maxlength"
+      :aria-describedby="hint ? `${id}-hint` : undefined"
       :class="inputClasses"
       @input="$emit('update:modelValue', $event.target.value)"
     />
-    <p v-if="hint" class="mt-1 text-[11px] text-slate-500">
+    <p v-if="hint" :id="`${id}-hint`" class="mt-1 text-[11px] text-slate-500">
       {{ hint }}
     </p>
   </div>

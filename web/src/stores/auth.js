@@ -1,6 +1,10 @@
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
-import { apiFetch } from "../services/apiClient";
+import { apiFetch } from "@/services/apiClient";
+import { api } from "@/services/api";
+import { useClientsStore } from "@/stores/clients";
+import { useDocumentsStore } from "@/stores/documents";
+import { useTemplatesStore } from "@/stores/templates";
 
 export const useAuthStore = defineStore("auth", () => {
   const user = ref(null);
@@ -65,6 +69,9 @@ export const useAuthStore = defineStore("auth", () => {
   async function logout() {
     await apiFetch("/logout", { method: "POST" });
     user.value = null;
+    useDocumentsStore().invalidate();
+    useClientsStore().invalidate();
+    useTemplatesStore().invalidate();
   }
 
   async function fetchUser() {
@@ -85,8 +92,30 @@ export const useAuthStore = defineStore("auth", () => {
     }
   }
 
+  async function deleteAccount() {
+    submitting.value = true;
+    error.value = null;
+    try {
+      await api.deleteAccount();
+      user.value = null;
+      useDocumentsStore().invalidate();
+      useClientsStore().invalidate();
+      useTemplatesStore().invalidate();
+      return true;
+    } catch (err) {
+      error.value = err.message || "Erreur lors de la suppression du compte";
+      return false;
+    } finally {
+      submitting.value = false;
+    }
+  }
+
   function clearError() {
     error.value = null;
+  }
+
+  function setError(message) {
+    error.value = message;
   }
 
   return {
@@ -99,6 +128,8 @@ export const useAuthStore = defineStore("auth", () => {
     register,
     logout,
     fetchUser,
+    deleteAccount,
     clearError,
+    setError,
   };
 });

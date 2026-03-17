@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import { apiFetch } from "../services/apiClient";
+import { apiFetch } from "@/services/apiClient";
 
 export const useSettingsStore = defineStore("settings", () => {
   const submitting = ref(false);
@@ -14,7 +14,7 @@ export const useSettingsStore = defineStore("settings", () => {
     submitting.value = true;
     error.value = null;
     try {
-      const response = await apiFetch("/api/settings/password", {
+      const response = await apiFetch("/api/profile/password", {
         method: "PUT",
         body: {
           current_password: currentPassword,

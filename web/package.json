@@ -8,27 +8,27 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite-ssg build",
     "preview": "vite preview",
     "lint": "eslint src --fix"
   },
   "dependencies": {
-    "laravel-echo": "^2.3.0",
+    "@unhead/vue": "^2.0.0",
     "lucide-vue-next": "^0.562.0",
     "pinia": "^3.0.4",
-    "pusher-js": "^8.4.0",
+    "vite-ssg": "^0.24.0",
     "vue": "^3.5.26",
     "vue-router": "^4.6.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
     "@tailwindcss/vite": "^4.1.18",
-    "@vitejs/plugin-vue": "^6.0.3",
+    "@vitejs/plugin-vue": "^5.0.0",
     "eslint": "^9.39.2",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-vue": "^10.7.0",
     "tailwindcss": "^4.1.18",
-    "vite": "^7.3.0",
-    "vite-plugin-vue-devtools": "^8.0.5"
+    "vite": "^6.0.0",
+    "vite-plugin-vue-devtools": "^7.0.0"
   }
 }

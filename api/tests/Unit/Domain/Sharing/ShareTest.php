@@ -82,5 +82,5 @@ it('generates share url', function (): void {
         expiresAt: null,
     );
 
-    expect($share->shareUrl('https://example.com'))->toBe('https://example.com/api/share/a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6');
+    expect($share->shareUrl('https://example.com'))->toBe('https://example.com/share/a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6');
 });

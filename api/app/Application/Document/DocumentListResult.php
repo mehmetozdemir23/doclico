@@ -9,5 +9,8 @@ final readonly class DocumentListResult
     /** @param DocumentResult[] $documents */
     public function __construct(
         public array $documents,
+        public int $total = 0,
+        public int $page = 1,
+        public int $perPage = 20,
     ) {}
 }

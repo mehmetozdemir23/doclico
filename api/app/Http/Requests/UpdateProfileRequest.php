@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Override;
 
 class UpdateProfileRequest extends FormRequest
 {
@@ -24,9 +25,16 @@ class UpdateProfileRequest extends FormRequest
                 'max:255',
                 Rule::unique('users')->ignore($this->user()->id),
             ],
+            'company_name' => ['nullable', 'string', 'max:255'],
+            'siret' => ['nullable', 'string', 'max:20'],
+            'address' => ['nullable', 'string', 'max:500'],
+            'phone' => ['nullable', 'string', 'max:20'],
+            'mentions_legales' => ['nullable', 'string', 'max:2000'],
+            'numero_tva' => ['nullable', 'string', 'max:50'],
         ];
     }
 
+    #[Override]
     public function messages(): array
     {
         return [

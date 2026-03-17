@@ -30,7 +30,7 @@ final readonly class AuthenticateUser
             return null;
         }
 
-        if (! $this->passwordHasher->verify($password, $user->password)) {
+        if ($user->password === null || ! $this->passwordHasher->verify($password, $user->password)) {
             return null;
         }
 

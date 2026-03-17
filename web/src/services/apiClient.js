@@ -25,17 +25,29 @@ export async function apiFetch(url, options = {}) {
   }
 
   const token = getXsrfToken();
+  const isFormData = body instanceof FormData;
 
-  return fetch(`${BASE_URL}${url}`, {
-    method,
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-      ...(token ? { "X-XSRF-TOKEN": token } : {}),
-      ...fetchOptions.headers,
-    },
-    ...(body ? { body: JSON.stringify(body) } : {}),
-    ...fetchOptions,
-  });
+  try {
+    const response = await fetch(`${BASE_URL}${url}`, {
+      method,
+      credentials: "include",
+      headers: {
+        ...(isFormData ? {} : { "Content-Type": "application/json" }),
+        Accept: "application/json",
+        ...(token ? { "X-XSRF-TOKEN": token } : {}),
+        ...fetchOptions.headers,
+      },
+      ...(body ? { body: isFormData ? body : JSON.stringify(body) } : {}),
+      ...fetchOptions,
+    });
+
+    if (response.status === 401 && url !== "/api/user" && window.location.pathname !== "/login") {
+      window.location.href = "/login";
+      return response;
+    }
+
+    return response;
+  } catch {
+    throw new Error("Impossible de contacter le serveur. Vérifiez votre connexion.");
+  }
 }

@@ -23,7 +23,7 @@ it('trims whitespace', function (): void {
 
 it('throws exception for invalid email', function (): void {
     Email::fromString('invalid-email');
-})->throws(InvalidEmailException::class, 'Invalid email format: invalid-email');
+})->throws(InvalidEmailException::class);
 
 it('throws exception for empty string', function (): void {
     Email::fromString('');

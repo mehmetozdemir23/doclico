@@ -1,12 +1,36 @@
 import { createPinia } from "pinia";
-import { createApp } from "vue";
+import { ViteSSG } from "vite-ssg";
 
 import "./main.css";
 import App from "./App.vue";
-import router from "./router";
+import { routes } from "./router";
+import { useAuthStore } from "./stores/auth";
 
-const app = createApp(App);
+export const createApp = ViteSSG(
+  App,
+  { routes, scrollBehavior: () => ({ top: 0 }) },
+  ({ app, router, isClient }) => {
+    app.use(createPinia());
 
-app.use(createPinia());
-app.use(router);
-app.mount("#app");
+    if (isClient) {
+      router.beforeEach(async (to) => {
+        const authStore = useAuthStore();
+
+        if (!authStore.initialized) {
+          await authStore.fetchUser();
+        }
+
+        if (
+          (to.name === "login" || to.name === "register") &&
+          authStore.isAuthenticated
+        ) {
+          return { name: "dashboard" };
+        }
+
+        if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+          return { name: "login" };
+        }
+      });
+    }
+  }
+);

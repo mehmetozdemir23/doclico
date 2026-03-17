@@ -9,7 +9,7 @@ use Stringable;
 
 final readonly class ShareToken implements Stringable
 {
-    private const TOKEN_LENGTH = 32;
+    private const int TOKEN_LENGTH = 32;
 
     private function __construct(
         public string $value

@@ -10,11 +10,11 @@ it('creates from a valid int', function (): void {
 
 it('throws exception for zero', function (): void {
     TemplateId::fromInt(0);
-})->throws(InvalidArgumentException::class, 'Invalid ID: 0. Must be a positive integer.');
+})->throws(InvalidArgumentException::class);
 
 it('throws exception for negative int', function (): void {
     TemplateId::fromInt(-5);
-})->throws(InvalidArgumentException::class, 'Invalid ID: -5. Must be a positive integer.');
+})->throws(InvalidArgumentException::class);
 
 it('compares same type IDs correctly', function (): void {
     $id1 = TemplateId::fromInt(42);

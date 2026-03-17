@@ -14,5 +14,7 @@ final readonly class ShareResult
         public int $downloadsCount,
         public ?string $lastDownloadedAt,
         public string $shareUrl,
+        public int $viewsCount = 0,
+        public ?string $firstViewedAt = null,
     ) {}
 }

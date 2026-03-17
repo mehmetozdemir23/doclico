@@ -14,5 +14,6 @@ final readonly class CreateDocumentData
         public UserId $userId,
         public ?string $name,
         public array $data,
+        public ?string $clientId = null,
     ) {}
 }

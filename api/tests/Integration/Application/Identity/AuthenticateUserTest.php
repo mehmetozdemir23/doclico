@@ -35,3 +35,16 @@ it('returns null for invalid password', function (): void {
 
     expect($user)->toBeNull();
 });
+
+it('returns null for google-only account with no password', function (): void {
+    UserModel::factory()->create([
+        'email' => 'google@example.com',
+        'password' => null,
+        'google_id' => 'google-abc',
+    ]);
+
+    $authenticateUser = app(AuthenticateUser::class);
+    $user = $authenticateUser->execute('google@example.com', 'anypassword');
+
+    expect($user)->toBeNull();
+});

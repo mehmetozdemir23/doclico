@@ -39,6 +39,16 @@ final readonly class UpdateProfile
             lastName: $data->lastName,
             email: $email,
             password: $user->password,
+            googleId: $user->googleId,
+            companyName: $data->companyName,
+            siret: $data->siret,
+            address: $data->address,
+            phone: $data->phone,
+            mentionsLegales: $data->mentionsLegales,
+            numeroTva: $data->numeroTva,
+            logo: $user->logo,
+            consentAcceptedAt: $user->consentAcceptedAt,
+            consentPolicyVersion: $user->consentPolicyVersion,
         );
 
         $this->userRepository->update($updatedUser);

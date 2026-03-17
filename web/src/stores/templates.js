@@ -49,6 +49,10 @@ export const useTemplatesStore = defineStore("templates", () => {
     }
   }
 
+  function invalidate() {
+    hasFetched = false;
+  }
+
   return {
     templates,
     loading,
@@ -56,5 +60,6 @@ export const useTemplatesStore = defineStore("templates", () => {
     categories,
     fetchTemplates,
     fetchTemplate,
+    invalidate,
   };
 });

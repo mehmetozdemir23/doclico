@@ -26,15 +26,14 @@ final readonly class Template
         return $this->name;
     }
 
+    public function isDeletable(): bool
+    {
+        return ! in_array($this->type, ['facture', 'avoir', 'note_frais', 'prestation'], true);
+    }
+
     public function hasRequiredFields(): bool
     {
-        foreach ($this->fields as $field) {
-            if ($field['required'] ?? false) {
-                return true;
-            }
-        }
-
-        return false;
+        return array_any($this->fields, fn ($field) => $field['required'] ?? false);
     }
 
     public function validateData(array $data): array

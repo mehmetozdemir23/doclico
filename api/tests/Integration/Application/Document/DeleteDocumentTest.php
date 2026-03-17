@@ -2,6 +2,7 @@
 
 use App\Application\Document\DeleteDocument;
 use App\Domain\Document\DocumentId;
+use App\Domain\Document\Exception\DocumentDeletionForbiddenException;
 use App\Domain\Document\Exception\DocumentNotFoundException;
 use App\Domain\Identity\UserId;
 use App\Domain\Shared\Exception\UnauthorizedException;
@@ -47,3 +48,14 @@ it('throws exception when user is not the owner', function (): void {
         UserId::fromString($otherUser->id)
     );
 })->throws(UnauthorizedException::class);
+
+it('throws exception when document type is legally protected', function (string $type): void {
+    $user = UserModel::factory()->create();
+    $template = TemplateModel::factory()->create(['type' => $type]);
+    $document = DocumentModel::factory()->for($user, 'user')->for($template, 'template')->create();
+
+    app(DeleteDocument::class)->execute(
+        DocumentId::fromString($document->id),
+        UserId::fromString($user->id)
+    );
+})->throws(DocumentDeletionForbiddenException::class)->with(['facture', 'avoir', 'note_frais', 'prestation']);

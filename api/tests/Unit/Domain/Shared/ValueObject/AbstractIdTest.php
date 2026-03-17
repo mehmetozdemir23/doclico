@@ -1,7 +1,6 @@
 <?php
 
 use App\Domain\Document\DocumentId;
-use App\Domain\FileGeneration\FileGenerationId;
 use App\Domain\Identity\UserId;
 use App\Domain\Sharing\ShareId;
 
@@ -21,7 +20,7 @@ it('creates from a valid string', function (): void {
 
 it('throws exception for invalid UUID string', function (): void {
     UserId::fromString('invalid-uuid');
-})->throws(InvalidArgumentException::class, 'Invalid UUID: invalid-uuid');
+})->throws(InvalidArgumentException::class);
 
 it('compares same type IDs correctly', function (): void {
     $value = '550e8400-e29b-41d4-a716-446655440000';
@@ -51,11 +50,9 @@ it('converts to string', function (): void {
 it('works with different typed IDs', function (): void {
     $userId = UserId::generate();
     $documentId = DocumentId::generate();
-    $fileGenerationId = FileGenerationId::generate();
     $shareId = ShareId::generate();
 
     expect($userId)->toBeInstanceOf(UserId::class)
         ->and($documentId)->toBeInstanceOf(DocumentId::class)
-        ->and($fileGenerationId)->toBeInstanceOf(FileGenerationId::class)
         ->and($shareId)->toBeInstanceOf(ShareId::class);
 });

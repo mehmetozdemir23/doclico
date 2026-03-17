@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Rendering;
 
+use App\Application\FileGeneration\RendererFactoryInterface;
 use App\Domain\FileGeneration\FileFormat;
 use App\Domain\FileGeneration\RendererInterface;
 use InvalidArgumentException;
 
-final class RendererFactory
+final class RendererFactory implements RendererFactoryInterface
 {
     /** @var RendererInterface[] */
     private array $renderers = [];

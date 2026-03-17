@@ -18,6 +18,8 @@ final class ShareResultMapper
             downloadsCount: $share->downloadsCount(),
             lastDownloadedAt: $share->lastDownloadedAt()?->format('c'),
             shareUrl: $share->shareUrl($baseUrl),
+            viewsCount: $share->viewsCount(),
+            firstViewedAt: $share->firstViewedAt()?->format('c'),
         );
     }
 
