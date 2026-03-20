@@ -26,8 +26,6 @@ jobs:
       - name: Build frontend
         working-directory: ./web
         run: npm run build
-        env:
-          VITE_BACKEND_URL: ${{ secrets.VITE_BACKEND_URL }}
 
       - name: Deploy frontend to Hostinger
         uses: appleboy/scp-action@v0.1.7
