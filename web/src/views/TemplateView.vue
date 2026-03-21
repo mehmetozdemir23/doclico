@@ -48,7 +48,7 @@
             >
               <select
                 v-model="selectedClientId"
-                class="flex-1 h-10 px-3 text-[15px] bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-slate-400 transition-colors"
+                class="flex-1 h-11 px-3 text-[15px] bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-slate-400 transition-colors"
               >
                 <option value="">Choisir un client...</option>
                 <option v-for="client in clientsStore.clients" :key="client.id" :value="client.id">
@@ -79,7 +79,7 @@
                 type="text"
                 maxlength="255"
                 :placeholder="template.type + '_' + formatShortDate()"
-                class="w-full h-10 px-3 text-[15px] bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-slate-400 transition-colors placeholder:text-slate-400"
+                class="w-full h-11 px-3 text-[15px] bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-slate-400 transition-colors placeholder:text-slate-400"
               />
             </div>
 
@@ -114,7 +114,7 @@
                 :required="field.required"
                 :placeholder="field.placeholder"
                 :maxlength="field.maxlength"
-                class="w-full h-10 px-3 text-[15px] bg-white border rounded-lg focus:outline-none transition-colors placeholder:text-slate-400"
+                class="w-full h-11 px-3 text-[15px] bg-white border rounded-lg focus:outline-none transition-colors placeholder:text-slate-400"
                 :class="fieldErrors[field.name] ? 'border-red-300 focus:border-red-400' : 'border-slate-200 focus:border-slate-400'"
               />
 
@@ -135,7 +135,7 @@
                 :id="field.name"
                 v-model="documentForm[field.name]"
                 :required="field.required"
-                class="w-full h-10 px-3 text-[15px] bg-white border rounded-lg focus:outline-none transition-colors"
+                class="w-full h-11 px-3 text-[15px] bg-white border rounded-lg focus:outline-none transition-colors"
                 :class="fieldErrors[field.name] ? 'border-red-300 focus:border-red-400' : 'border-slate-200 focus:border-slate-400'"
               >
                 <option value="">Sélectionnez une option</option>
@@ -278,9 +278,10 @@
               <div
                 class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-4 border-t border-slate-200"
               >
-                <div class="flex items-center gap-3">
+                <div class="flex flex-col sm:flex-row sm:items-center gap-2">
                   <BaseButton
                     type="button"
+                    class="w-full sm:w-auto"
                     :disabled="submitting"
                     @click="handleGenerate"
                   >
@@ -290,14 +291,14 @@
                     v-if="downloadUrl"
                     :href="downloadUrl"
                     target="_blank"
-                    class="inline-flex items-center justify-center gap-2 h-9 px-4 text-[13px] font-medium text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"
+                    class="inline-flex items-center justify-center gap-2 h-9 px-4 text-[13px] font-medium text-slate-700 hover:bg-slate-100 rounded-lg transition-colors w-full sm:w-auto"
                   >
                     Télécharger
                   </a>
                 </div>
                 <button
                   type="button"
-                  class="text-[13px] text-slate-500 hover:text-slate-900 transition-colors"
+                  class="text-[13px] text-slate-500 hover:text-slate-900 transition-colors text-center sm:text-right"
                   @click="initializeTemplateForm"
                 >
                   Réinitialiser

@@ -8,17 +8,17 @@
         v-for="item in items"
         :key="item.routeName"
         :to="{ name: item.routeName }"
-        class="flex flex-col items-center justify-center gap-1 py-2.5 transition-colors"
+        class="flex flex-col items-center justify-center gap-1 py-3 transition-colors"
         :class="isActive(item.routeName) ? 'text-slate-900' : 'text-slate-400'"
         :aria-current="isActive(item.routeName) ? 'page' : undefined"
       >
         <div
-          class="w-10 h-7 flex items-center justify-center rounded-full transition-colors"
+          class="w-12 h-8 flex items-center justify-center rounded-full transition-colors"
           :class="isActive(item.routeName) ? 'bg-slate-100' : ''"
         >
-          <component :is="item.icon" class="w-[18px] h-[18px]" aria-hidden="true" />
+          <component :is="item.icon" class="w-6 h-6" aria-hidden="true" />
         </div>
-        <span class="text-[10px] font-medium leading-none">{{ item.label }}</span>
+        <span class="text-[11px] font-medium leading-none">{{ item.label }}</span>
       </router-link>
     </div>
   </nav>

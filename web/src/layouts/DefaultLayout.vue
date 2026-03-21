@@ -18,11 +18,11 @@
               Dashboard
             </router-link>
             <button
-              class="text-[13px] font-medium text-slate-500 hover:text-slate-900 transition-colors"
+              class="inline-flex items-center justify-center h-10 w-10 text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
               aria-label="Déconnexion"
               @click="handleLogout"
             >
-              <LogOut class="w-4 h-4" aria-hidden="true" />
+              <LogOut class="w-5 h-5" aria-hidden="true" />
             </button>
           </div>
           <router-link

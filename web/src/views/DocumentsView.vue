@@ -2,7 +2,7 @@
   <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-3">
     <div class="flex items-center gap-1.5 overflow-x-auto pb-0.5 sm:flex-wrap sm:overflow-visible sm:pb-0">
       <button
-        class="h-7 px-3 text-[12px] font-medium rounded-full border transition-colors flex-shrink-0"
+        class="h-8 px-3.5 text-[13px] font-medium rounded-full border transition-colors flex-shrink-0"
         :class="filterTypes.length === 0 ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-500 border-slate-200 hover:border-slate-300'"
         @click="filterTypes = []"
       >
@@ -11,7 +11,7 @@
       <button
         v-for="t in availableTypes"
         :key="t.type"
-        class="h-7 px-3 text-[12px] font-medium rounded-full border transition-colors flex-shrink-0"
+        class="h-8 px-3.5 text-[13px] font-medium rounded-full border transition-colors flex-shrink-0"
         :class="filterTypes.includes(t.type) ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-500 border-slate-200 hover:border-slate-300'"
         @click="toggleFilterType(t.type)"
       >
@@ -72,48 +72,48 @@
       <div
         v-for="document in documents"
         :key="document.id"
-        class="flex items-center gap-3 px-4 py-3.5 bg-white cursor-pointer active:bg-slate-50 transition-colors"
+        class="flex items-center gap-3 px-4 py-4 bg-white cursor-pointer active:bg-slate-50 transition-colors"
         @click="documentsStore.openDocument(document.id)"
       >
         <div class="flex-1 min-w-0">
-          <p class="text-[13px] font-medium text-slate-900 truncate mb-1">{{ document.name }}</p>
+          <p class="text-[15px] font-medium text-slate-900 truncate mb-1">{{ document.name }}</p>
           <div class="flex items-center gap-1.5 flex-wrap">
             <span
-              class="inline-flex items-center h-4 px-1.5 rounded text-[10px] font-medium"
+              class="inline-flex items-center h-5 px-2 rounded text-[11px] font-medium"
               :class="typeClass(document.template?.type)"
             >{{ typeLabel(document.template?.type) }}</span>
-            <span v-if="document.client" class="text-[11px] text-slate-500">{{ document.client.nom }}</span>
+            <span v-if="document.client" class="text-[12px] text-slate-500">{{ document.client.nom }}</span>
             <span
               v-if="shareStatus(document)"
-              class="inline-flex items-center h-4 px-1.5 rounded text-[10px] font-medium"
+              class="inline-flex items-center h-5 px-2 rounded text-[11px] font-medium"
               :class="shareStatusClass[shareStatus(document)]"
             >{{ shareStatusLabel[shareStatus(document)] }}</span>
-            <span class="text-[11px] text-slate-400">{{ formatLongDate(document.generatedAt) }}</span>
+            <span class="text-[12px] text-slate-400">{{ formatLongDate(document.generatedAt) }}</span>
           </div>
         </div>
         <div class="flex items-center gap-0.5 flex-shrink-0">
           <button
-            class="inline-flex items-center justify-center h-9 w-9 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"
+            class="inline-flex items-center justify-center h-11 w-11 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-xl transition-colors"
             :aria-label="`Partager ${document.name}`"
             @click.stop="openShareModal(document)"
           >
-            <Share2 class="w-4 h-4" aria-hidden="true" />
+            <Share2 class="w-5 h-5" aria-hidden="true" />
           </button>
           <button
             v-if="isDeletable(document)"
-            class="inline-flex items-center justify-center h-9 w-9 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+            class="inline-flex items-center justify-center h-11 w-11 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-colors"
             :aria-label="`Supprimer ${document.name}`"
             @click.stop="handleDelete(document.id)"
           >
-            <Trash2 class="w-4 h-4" aria-hidden="true" />
+            <Trash2 class="w-5 h-5" aria-hidden="true" />
           </button>
           <span
             v-else
-            class="inline-flex items-center justify-center h-9 w-9 text-slate-300 cursor-default"
+            class="inline-flex items-center justify-center h-11 w-11 text-slate-300 cursor-default"
             role="img"
             aria-label="Conservation légale obligatoire"
           >
-            <Lock class="w-4 h-4" aria-hidden="true" />
+            <Lock class="w-5 h-5" aria-hidden="true" />
           </span>
         </div>
       </div>
