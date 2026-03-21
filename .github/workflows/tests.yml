@@ -1,0 +1,68 @@
+name: Tests
+
+on:
+  push:
+    branches: [dev, main]
+  pull_request:
+    branches: [dev, main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    env:
+      FRONTEND_URL: http://localhost
+      APP_ENV: testing
+      DB_CONNECTION: sqlite
+      DB_DATABASE: ":memory:"
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.4"
+          extensions: mbstring, pdo, pdo_sqlite, xml
+          coverage: pcov
+          tools: composer:v2
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: api/vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Create .env file
+        working-directory: ./api
+        run: cp .env.testing .env
+
+      - name: Install dependencies
+        working-directory: ./api
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Generate application key
+        working-directory: ./api
+        run: php artisan key:generate
+
+      - name: Create test database
+        working-directory: ./api
+        run: touch database/database.sqlite
+
+      - name: Run migrations
+        working-directory: ./api
+        run: php artisan migrate --force
+
+      - name: Run tests
+        working-directory: ./api
+        run: ./vendor/bin/pest --coverage --coverage-html=coverage
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        if: always() && hashFiles('api/coverage') != ''
+        with:
+          name: coverage-report
+          path: api/coverage
+          retention-days: 30
