@@ -3,7 +3,7 @@
     <label
       v-if="label"
       :for="id"
-      class="block text-[13px] font-medium text-slate-700 mb-1.5"
+      class="block text-[14px] font-medium text-slate-700 mb-1.5"
     >
       {{ label }}
     </label>
@@ -83,7 +83,7 @@ const inputClasses = computed(() => {
   const baseClasses =
     "w-full px-3 bg-white border border-slate-200 rounded-lg focus:outline-none focus:border-slate-400 transition-colors placeholder:text-slate-400";
   const sizeClasses =
-    props.size === "sm" ? "h-10 text-[13px]" : "h-10 text-[15px]";
+    props.size === "sm" ? "h-11 text-[15px]" : "h-11 text-[15px]";
   const disabledClasses = props.disabled ? "opacity-50 cursor-not-allowed" : "";
 
   return `${baseClasses} ${sizeClasses} ${disabledClasses}`;

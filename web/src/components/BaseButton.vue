@@ -57,8 +57,8 @@ const buttonClasses = computed(() => {
     "inline-flex items-center justify-center gap-2 font-medium rounded-lg transition-colors";
 
   const sizeClasses = {
-    sm: "h-8 px-3 text-[13px]",
-    md: "h-9 px-4 text-[13px]",
+    sm: "h-9 px-3 text-[13px]",
+    md: "h-11 px-5 text-[14px]",
   }[props.size];
 
   const variantClasses = {
