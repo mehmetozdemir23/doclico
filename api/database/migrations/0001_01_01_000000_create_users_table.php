@@ -15,12 +15,21 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('first_name');
             $table->string('last_name');
+            $table->string('company_name')->nullable();
             $table->string('email')->unique();
+            $table->string('siret', 20)->nullable();
+            $table->string('numero_tva', 50)->nullable();
+            $table->text('address')->nullable();
+            $table->string('phone', 20)->nullable();
+            $table->text('mentions_legales')->nullable();
+            $table->string('logo', 500)->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->timestamp('consent_accepted_at')->nullable();
+            $table->string('consent_policy_version', 10)->nullable();
+            $table->string('password')->nullable();
+            $table->string('google_id')->nullable()->unique();
             $table->rememberToken();
             $table->timestamps();
-            $table->softDeletes();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table): void {
@@ -31,7 +40,7 @@ return new class extends Migration
 
         Schema::create('sessions', function (Blueprint $table): void {
             $table->string('id')->primary();
-            $table->foreignId('user_id')->nullable()->index();
+            $table->string('user_id')->nullable()->index();
             $table->string('ip_address', 45)->nullable();
             $table->text('user_agent')->nullable();
             $table->longText('payload');

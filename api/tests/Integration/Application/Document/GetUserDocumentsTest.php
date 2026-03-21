@@ -2,6 +2,7 @@
 
 use App\Application\Document\GetUserDocuments;
 use App\Domain\Identity\UserId;
+use App\Infrastructure\Persistence\Eloquent\ClientModel;
 use App\Infrastructure\Persistence\Eloquent\DocumentModel;
 use App\Infrastructure\Persistence\Eloquent\TemplateModel;
 use App\Infrastructure\Persistence\Eloquent\UserModel;
@@ -39,4 +40,45 @@ it('does not return other users documents', function (): void {
     $documents = $getUserDocuments->execute(UserId::fromString($user1->id));
 
     expect($documents->documents)->toHaveCount(2);
+});
+
+it('includes template data in results', function (): void {
+    $user = UserModel::factory()->create();
+    $template = TemplateModel::factory()->create([
+        'name' => 'Test Template',
+        'type' => 'test-type',
+    ]);
+
+    DocumentModel::factory()->for($user, 'user')->for($template, 'template')->create();
+
+    $result = app(GetUserDocuments::class)->execute(UserId::fromString($user->id));
+
+    expect($result->documents)->toHaveCount(1);
+    expect($result->documents[0]->template)->not->toBeNull();
+    expect($result->documents[0]->template->name)->toBe('Test Template');
+    expect($result->documents[0]->template->type)->toBe('test-type');
+});
+
+it('includes client data when document has a linked client', function (): void {
+    $user = UserModel::factory()->create();
+    $template = TemplateModel::factory()->create();
+    $client = ClientModel::factory()->for($user, 'user')->create(['nom' => 'Acme Corp']);
+
+    DocumentModel::factory()->for($user, 'user')->for($template, 'template')->for($client, 'client')->create();
+
+    $result = app(GetUserDocuments::class)->execute(UserId::fromString($user->id));
+
+    expect($result->documents[0]->client)->not->toBeNull();
+    expect($result->documents[0]->client->nom)->toBe('Acme Corp');
+});
+
+it('returns null client when document has no linked client', function (): void {
+    $user = UserModel::factory()->create();
+    $template = TemplateModel::factory()->create();
+
+    DocumentModel::factory()->for($user, 'user')->for($template, 'template')->create();
+
+    $result = app(GetUserDocuments::class)->execute(UserId::fromString($user->id));
+
+    expect($result->documents[0]->client)->toBeNull();
 });

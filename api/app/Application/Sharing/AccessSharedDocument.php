@@ -66,6 +66,7 @@ final readonly class AccessSharedDocument
             share: ShareResultMapper::toResult($share, $this->baseUrl),
             document: DocumentResultMapper::toResult($document),
             template: TemplateResultMapper::toResult($template),
+            ownerUserId: $document->userId->value,
         );
     }
 }

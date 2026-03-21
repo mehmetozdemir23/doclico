@@ -14,5 +14,9 @@ interface UserRepositoryInterface
 
     public function findByEmail(Email $email): ?User;
 
+    public function findByGoogleId(string $googleId): ?User;
+
     public function existsByEmail(Email $email): bool;
+
+    public function delete(UserId $id): void;
 }

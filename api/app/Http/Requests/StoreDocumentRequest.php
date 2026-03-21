@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Template;
 use Illuminate\Foundation\Http\FormRequest;
+use Override;
 
 class StoreDocumentRequest extends FormRequest
 {
@@ -14,25 +14,15 @@ class StoreDocumentRequest extends FormRequest
 
     public function rules(): array
     {
-        $rules = [
+        return [
             'template_id' => 'required|integer|exists:templates,id',
             'name' => 'nullable|string|max:255',
             'data' => 'present|array',
+            'client_id' => 'nullable|uuid|exists:clients,id',
         ];
-
-        if ($this->template_id) {
-            $template = Template::find($this->template_id);
-            if ($template) {
-                foreach ($template->fields as $field) {
-                    $fieldRules = $field['required'] ?? false ? ['required'] : ['nullable'];
-                    $rules["data.{$field['name']}"] = $fieldRules;
-                }
-            }
-        }
-
-        return $rules;
     }
 
+    #[Override]
     public function messages(): array
     {
         return [

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('category');
             $table->string('icon')->nullable();
             $table->json('fields');
-            $table->boolean('popular')->default(false);
+            $table->boolean('popular');
             $table->timestamps();
         });
     }

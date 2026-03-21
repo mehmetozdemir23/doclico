@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Persistence\Mapper;
 
+use App\Domain\Client\ClientId;
 use App\Domain\Document\Document;
 use App\Domain\Document\DocumentId;
 use App\Domain\Identity\UserId;
@@ -21,9 +22,8 @@ final class DocumentMapper
             templateId: TemplateId::fromInt($model->template_id),
             name: $model->name,
             data: $model->data ?? [],
-            createdAt: $model->created_at ? new DateTimeImmutable($model->created_at->toDateTimeString()) : null,
-            templateName: $model->relationLoaded('template') ? $model->template?->name : null,
-            templateType: $model->relationLoaded('template') ? $model->template?->type : null,
+            generatedAt: $model->created_at?->toDateTimeImmutable() ?? new DateTimeImmutable,
+            clientId: $model->client_id ? ClientId::fromString($model->client_id) : null,
         );
     }
 
@@ -35,6 +35,8 @@ final class DocumentMapper
         $model->template_id = $entity->templateId->value;
         $model->name = $entity->name;
         $model->data = $entity->data;
+        $model->client_id = $entity->clientId?->value;
+        $model->created_at = $entity->generatedAt;
 
         return $model;
     }

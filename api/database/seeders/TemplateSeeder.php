@@ -11,330 +11,102 @@ class TemplateSeeder extends Seeder
     {
         $templates = [
 
+            // ── Facturation ──────────────────────────────────────────────
+
             [
-                'type' => 'quittance_loyer',
-                'name' => 'Quittance de loyer',
-                'category' => 'Logement',
-                'icon' => 'Home',
+                'type' => 'facture',
+                'name' => 'Facture',
+                'category' => 'Facturation',
+                'icon' => 'Receipt',
                 'popular' => true,
                 'fields' => [
-                    [
-                        'name' => 'bailleur_nom',
-                        'label' => 'Bailleur',
-                        'type' => 'text',
-                        'required' => true,
-                        'placeholder' => 'Jean Dupont',
-                    ],
-                    [
-                        'name' => 'locataire_nom',
-                        'label' => 'Locataire',
-                        'type' => 'text',
-                        'required' => true,
-                        'placeholder' => 'Marie Martin',
-                    ],
-                    [
-                        'name' => 'adresse',
-                        'label' => 'Adresse du bien',
-                        'type' => 'text',
-                        'required' => true,
-                        'placeholder' => '12 rue de la Paix, 75001 Paris',
-                    ],
-                    [
-                        'name' => 'periode',
-                        'label' => 'Période',
-                        'type' => 'text',
-                        'required' => true,
-                        'placeholder' => 'Janvier 2026',
-                    ],
-                    [
-                        'name' => 'loyer',
-                        'label' => 'Loyer (€)',
-                        'type' => 'text',
-                        'required' => true,
-                        'placeholder' => '850',
-                    ],
-                    [
-                        'name' => 'charges',
-                        'label' => 'Charges (€)',
-                        'type' => 'text',
-                        'required' => false,
-                        'placeholder' => '50',
-                    ],
-                ],
-            ],
-            [
-                'type' => 'attestation_hebergement',
-                'name' => 'Attestation d\'hébergement',
-                'category' => 'Logement',
-                'icon' => 'Home',
-                'popular' => true,
-                'fields' => [
-                    [
-                        'name' => 'hebergeur_nom',
-                        'label' => 'Hébergeur',
-                        'type' => 'text',
-                        'required' => true,
-                        'placeholder' => 'Jean Dupont',
-                    ],
-                    [
-                        'name' => 'heberge_nom',
-                        'label' => 'Personne hébergée',
-                        'type' => 'text',
-                        'required' => true,
-                        'placeholder' => 'Marie Martin',
-                    ],
-                    [
-                        'name' => 'adresse',
-                        'label' => 'Adresse',
-                        'type' => 'text',
-                        'required' => true,
-                        'placeholder' => '12 rue de la Paix, 75001 Paris',
-                    ],
-                    [
-                        'name' => 'date_debut',
-                        'label' => 'Hébergé depuis le',
-                        'type' => 'date',
-                        'required' => true,
-                    ],
-                ],
-            ],
-            [
-                'type' => 'resiliation_bail',
-                'name' => 'Résiliation de bail',
-                'category' => 'Logement',
-                'icon' => 'Home',
-                'popular' => false,
-                'fields' => [
-                    [
-                        'name' => 'locataire_nom',
-                        'label' => 'Locataire',
-                        'type' => 'text',
-                        'required' => true,
-                        'placeholder' => 'Marie Martin',
-                    ],
-                    [
-                        'name' => 'adresse',
-                        'label' => 'Adresse du logement',
-                        'type' => 'text',
-                        'required' => true,
-                        'placeholder' => '12 rue de la Paix, 75001 Paris',
-                    ],
-                    [
-                        'name' => 'bailleur_nom',
-                        'label' => 'Bailleur',
-                        'type' => 'text',
-                        'required' => true,
-                        'placeholder' => 'Jean Dupont',
-                    ],
-                    [
-                        'name' => 'date_depart',
-                        'label' => 'Date de départ souhaitée',
-                        'type' => 'date',
-                        'required' => true,
-                    ],
+                    ['name' => 'date_facture',   'label' => 'Date',              'type' => 'date',       'required' => true],
+                    ['name' => 'lignes',         'label' => 'Prestations',       'type' => 'line_items', 'required' => true],
+                    ['name' => 'nature_transaction', 'label' => 'Nature de la transaction', 'type' => 'select', 'required' => true, 'options' => [
+                        ['value' => 'Prestation de services',    'label' => 'Prestation de services'],
+                        ['value' => 'Vente de biens',            'label' => 'Vente de biens'],
+                        ['value' => 'Mixte (biens et services)', 'label' => 'Mixte (biens et services)'],
+                    ]],
+                    ['name' => 'tva',            'label' => 'TVA (%)',           'type' => 'text',       'required' => false, 'placeholder' => '20'],
                 ],
             ],
 
             [
-                'type' => 'attestation_employeur',
-                'name' => 'Attestation employeur',
-                'category' => 'Emploi',
-                'icon' => 'Briefcase',
-                'popular' => true,
-                'fields' => [
-                    [
-                        'name' => 'entreprise',
-                        'label' => 'Entreprise',
-                        'type' => 'text',
-                        'required' => true,
-                        'placeholder' => 'Acme Corp',
-                    ],
-                    [
-                        'name' => 'employe_nom',
-                        'label' => 'Employé',
-                        'type' => 'text',
-                        'required' => true,
-                        'placeholder' => 'Marie Martin',
-                    ],
-                    [
-                        'name' => 'poste',
-                        'label' => 'Poste',
-                        'type' => 'text',
-                        'required' => true,
-                        'placeholder' => 'Développeur',
-                    ],
-                    [
-                        'name' => 'date_embauche',
-                        'label' => 'En poste depuis',
-                        'type' => 'date',
-                        'required' => true,
-                    ],
-                    [
-                        'name' => 'type_contrat',
-                        'label' => 'Contrat',
-                        'type' => 'select',
-                        'required' => true,
-                        'options' => [
-                            ['value' => 'cdi', 'label' => 'CDI'],
-                            ['value' => 'cdd', 'label' => 'CDD'],
-                            ['value' => 'alternance', 'label' => 'Alternance'],
-                        ],
-                    ],
-                    [
-                        'name' => 'salaire',
-                        'label' => 'Salaire brut mensuel (€)',
-                        'type' => 'text',
-                        'required' => false,
-                        'placeholder' => '3000',
-                    ],
-                ],
-            ],
-            [
-                'type' => 'certificat_travail',
-                'name' => 'Certificat de travail',
-                'category' => 'Emploi',
-                'icon' => 'Briefcase',
-                'popular' => true,
-                'fields' => [
-                    [
-                        'name' => 'entreprise',
-                        'label' => 'Entreprise',
-                        'type' => 'text',
-                        'required' => true,
-                        'placeholder' => 'Acme Corp',
-                    ],
-                    [
-                        'name' => 'employe_nom',
-                        'label' => 'Employé',
-                        'type' => 'text',
-                        'required' => true,
-                        'placeholder' => 'Marie Martin',
-                    ],
-                    [
-                        'name' => 'poste',
-                        'label' => 'Poste occupé',
-                        'type' => 'text',
-                        'required' => true,
-                        'placeholder' => 'Développeur',
-                    ],
-                    [
-                        'name' => 'date_debut',
-                        'label' => 'Du',
-                        'type' => 'date',
-                        'required' => true,
-                    ],
-                    [
-                        'name' => 'date_fin',
-                        'label' => 'Au',
-                        'type' => 'date',
-                        'required' => true,
-                    ],
-                ],
-            ],
-
-            [
-                'type' => 'attestation_honneur',
-                'name' => 'Attestation sur l\'honneur',
-                'category' => 'Administratif',
+                'type' => 'devis',
+                'name' => 'Devis',
+                'category' => 'Facturation',
                 'icon' => 'FileText',
                 'popular' => true,
                 'fields' => [
-                    [
-                        'name' => 'nom',
-                        'label' => 'Nom complet',
-                        'type' => 'text',
-                        'required' => true,
-                        'placeholder' => 'Jean Dupont',
-                    ],
-                    [
-                        'name' => 'adresse',
-                        'label' => 'Adresse',
-                        'type' => 'text',
-                        'required' => true,
-                        'placeholder' => '12 rue de la Paix, 75001 Paris',
-                    ],
-                    [
-                        'name' => 'objet',
-                        'label' => 'J\'atteste sur l\'honneur',
-                        'type' => 'textarea',
-                        'required' => true,
-                        'placeholder' => 'ne pas percevoir de revenus...',
-                    ],
-                ],
-            ],
-            [
-                'type' => 'procuration',
-                'name' => 'Procuration',
-                'category' => 'Administratif',
-                'icon' => 'FileText',
-                'popular' => false,
-                'fields' => [
-                    [
-                        'name' => 'mandant_nom',
-                        'label' => 'Mandant (vous)',
-                        'type' => 'text',
-                        'required' => true,
-                        'placeholder' => 'Jean Dupont',
-                    ],
-                    [
-                        'name' => 'mandataire_nom',
-                        'label' => 'Mandataire',
-                        'type' => 'text',
-                        'required' => true,
-                        'placeholder' => 'Marie Martin',
-                    ],
-                    [
-                        'name' => 'objet',
-                        'label' => 'Objet',
-                        'type' => 'text',
-                        'required' => true,
-                        'placeholder' => 'Retrait de colis',
-                    ],
-                    [
-                        'name' => 'date_validite',
-                        'label' => 'Valable jusqu\'au',
-                        'type' => 'date',
-                        'required' => false,
-                    ],
+                    ['name' => 'date_devis',     'label' => 'Date',              'type' => 'date',       'required' => true],
+                    ['name' => 'validite',       'label' => 'Validité',          'type' => 'text',       'required' => false, 'placeholder' => '30 jours'],
+                    ['name' => 'lignes',         'label' => 'Prestations',       'type' => 'line_items', 'required' => true],
+                    ['name' => 'tva',            'label' => 'TVA (%)',           'type' => 'text',       'required' => false, 'placeholder' => '20'],
                 ],
             ],
 
             [
-                'type' => 'autorisation_parentale',
-                'name' => 'Autorisation parentale',
-                'category' => 'Famille',
-                'icon' => 'Users',
-                'popular' => true,
+                'type' => 'avoir',
+                'name' => 'Avoir',
+                'category' => 'Facturation',
+                'icon' => 'RotateCcw',
+                'popular' => false,
                 'fields' => [
-                    [
-                        'name' => 'parent_nom',
-                        'label' => 'Parent',
-                        'type' => 'text',
-                        'required' => true,
-                        'placeholder' => 'Jean Dupont',
-                    ],
-                    [
-                        'name' => 'enfant_nom',
-                        'label' => 'Enfant',
-                        'type' => 'text',
-                        'required' => true,
-                        'placeholder' => 'Marie Dupont',
-                    ],
-                    [
-                        'name' => 'enfant_date_naissance',
-                        'label' => 'Né(e) le',
-                        'type' => 'date',
-                        'required' => true,
-                    ],
-                    [
-                        'name' => 'activite',
-                        'label' => 'Activité autorisée',
-                        'type' => 'text',
-                        'required' => true,
-                        'placeholder' => 'Sortie scolaire au musée',
-                    ],
+                    ['name' => 'date_avoir',        'label' => 'Date',                   'type' => 'date',     'required' => true],
+                    ['name' => 'facture_reference', 'label' => 'Facture de référence',   'type' => 'text',     'required' => false, 'placeholder' => 'FAC-2026-001'],
+                    ['name' => 'motif',             'label' => 'Motif du crédit',        'type' => 'textarea', 'required' => true,  'placeholder' => 'Annulation partielle de la prestation suite à un accord client.'],
+                    ['name' => 'montant_ht',        'label' => 'Montant crédité HT (€)', 'type' => 'text',     'required' => true,  'placeholder' => '500'],
+                    ['name' => 'tva',               'label' => 'TVA (%)',                'type' => 'text',     'required' => false, 'placeholder' => '20'],
                 ],
             ],
+
+            // ── Contrats ─────────────────────────────────────────────────
+
+            [
+                'type' => 'prestation',
+                'name' => 'Contrat de prestation',
+                'category' => 'Contrats',
+                'icon' => 'FilePen',
+                'popular' => true,
+                'fields' => [
+                    ['name' => 'objet',              'label' => 'Objet de la prestation',  'type' => 'text',     'required' => true,  'placeholder' => "Développement d'une application mobile"],
+                    ['name' => 'description',        'label' => 'Description détaillée',   'type' => 'textarea', 'required' => true,  'placeholder' => 'Détail des missions et livrables...'],
+                    ['name' => 'montant',            'label' => 'Montant HT (€)',          'type' => 'text',     'required' => true,  'placeholder' => '5000'],
+                    ['name' => 'modalites_paiement', 'label' => 'Modalités de paiement',   'type' => 'textarea', 'required' => false, 'placeholder' => '50% à la signature, 50% à la livraison'],
+                    ['name' => 'date_debut',         'label' => 'Date de début',           'type' => 'date',     'required' => true],
+                    ['name' => 'date_fin',           'label' => 'Date de fin',             'type' => 'date',     'required' => false],
+                ],
+            ],
+
+            // ── Courrier ─────────────────────────────────────────────────
+
+            [
+                'type' => 'reclamation',
+                'name' => 'Lettre de relance',
+                'category' => 'Courrier',
+                'icon' => 'Mail',
+                'popular' => false,
+                'fields' => [
+                    ['name' => 'objet',                'label' => 'Objet',                   'type' => 'text',     'required' => true,  'placeholder' => 'Relance facture FAC-2026-001 du 15 janvier 2026'],
+                    ['name' => 'contenu',              'label' => 'Corps du courrier',        'type' => 'textarea', 'required' => true,  'placeholder' => "Sauf erreur de ma part, la facture n° FAC-2026-001 d'un montant de 2 000 € HT demeure impayée à ce jour..."],
+                ],
+            ],
+
+            // ── Administratif ────────────────────────────────────────────
+
+            [
+                'type' => 'note_frais',
+                'name' => 'Note de frais',
+                'category' => 'Administratif',
+                'icon' => 'Wallet',
+                'popular' => false,
+                'fields' => [
+                    ['name' => 'periode',      'label' => 'Période',               'type' => 'text',          'required' => false, 'placeholder' => 'Mars 2026'],
+                    ['name' => 'lignes',       'label' => 'Frais',                 'type' => 'expense_items', 'required' => true],
+                    ['name' => 'commentaire',  'label' => 'Commentaire',           'type' => 'textarea',      'required' => false, 'placeholder' => 'Déplacement dans le cadre du projet X...'],
+                ],
+            ],
+
         ];
 
         foreach ($templates as $template) {

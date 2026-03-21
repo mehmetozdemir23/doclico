@@ -32,11 +32,28 @@
             placeholder="••••••••"
           />
 
+          <div class="flex justify-end">
+            <router-link
+              :to="{ name: 'forgot-password' }"
+              class="text-[13px] text-slate-500 hover:text-slate-900 transition-colors"
+            >
+              Mot de passe oublié ?
+            </router-link>
+          </div>
+
           <BaseAlert v-if="error" :message="error" type="error" />
 
           <BaseButton type="submit" :disabled="loading" :full-width="true">
             {{ loading ? "Connexion..." : "Se connecter" }}
           </BaseButton>
+
+          <div class="relative flex items-center gap-3">
+            <div class="flex-1 h-px bg-slate-200"></div>
+            <span class="text-[12px] text-slate-400 flex-shrink-0">ou</span>
+            <div class="flex-1 h-px bg-slate-200"></div>
+          </div>
+
+          <GoogleAuthButton />
 
           <div class="text-center">
             <p class="text-[13px] text-slate-500">
@@ -57,14 +74,14 @@
 
 <script setup>
 import { computed, ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 import BaseAlert from "@/components/BaseAlert.vue";
 import BaseButton from "@/components/BaseButton.vue";
 import BaseInput from "@/components/BaseInput.vue";
+import GoogleAuthButton from "@/components/GoogleAuthButton.vue";
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
 import { useAuthStore } from "@/stores/auth";
 
-const route = useRoute();
 const router = useRouter();
 const authStore = useAuthStore();
 
@@ -78,8 +95,7 @@ const error = computed(() => authStore.error);
 const handleLogin = async () => {
   const success = await authStore.login(loginForm.value.email, loginForm.value.password);
   if (success) {
-    const redirect = route.query.redirect || "/";
-    router.push(redirect);
+    router.push("/dashboard");
   }
 };
 </script>

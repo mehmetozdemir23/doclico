@@ -18,4 +18,17 @@ export default defineConfig({
       usePolling: true,
     },
   },
+  ssgOptions: {
+    script: "async",
+    formatting: "minify",
+    includedRoutes: () => [
+      "/",
+      "/login",
+      "/register",
+      "/forgot-password",
+      "/privacy",
+      "/legal",
+      "/terms",
+    ],
+  },
 });

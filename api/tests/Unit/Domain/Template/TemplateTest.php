@@ -7,15 +7,15 @@ it('creates a template', function (): void {
     $templateId = TemplateId::fromInt(1);
     $template = new Template(
         id: $templateId,
-        type: 'honneur',
-        name: 'Attestation sur l\'honneur',
-        category: 'Administratif',
-        icon: 'document',
+        type: 'facture',
+        name: 'Facture',
+        category: 'Facturation',
+        icon: 'Receipt',
         fields: [],
     );
 
     expect($template->id)->toBe($templateId)
-        ->and($template->type)->toBe('honneur')
+        ->and($template->type)->toBe('facture')
         ->and($template->popular)->toBeFalse();
 });
 

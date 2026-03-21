@@ -13,5 +13,6 @@ final readonly class SharedDocumentResult
         public ShareResult $share,
         public DocumentResult $document,
         public TemplateResult $template,
+        public string $ownerUserId = '',
     ) {}
 }

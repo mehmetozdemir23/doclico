@@ -1,89 +1,109 @@
 import { createRouter, createWebHistory } from "vue-router";
-import ProfileView from "@/components/ProfileView.vue";
-import { useAuthStore } from "@/stores/auth";
-import DashboardView from "@/views/DashboardView.vue";
-import DocumentsView from "@/views/DocumentsView.vue";
-import HomeView from "@/views/HomeView.vue";
-import LoginView from "@/views/LoginView.vue";
-import RegisterView from "@/views/RegisterView.vue";
-import SettingsView from "@/views/SettingsView.vue";
-import TemplateView from "@/views/TemplateView.vue";
 
-const router = createRouter({
+export const routes = [
+  {
+    path: "/",
+    name: "home",
+    component: () => import("@/views/HomeView.vue"),
+    meta: { requiresAuth: false },
+  },
+  {
+    path: "/template",
+    name: "template",
+    component: () => import("@/views/TemplateView.vue"),
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: () => import("@/views/LoginView.vue"),
+    meta: { requiresAuth: false },
+  },
+  {
+    path: "/register",
+    name: "register",
+    component: () => import("@/views/RegisterView.vue"),
+    meta: { requiresAuth: false },
+  },
+  {
+    path: "/forgot-password",
+    name: "forgot-password",
+    component: () => import("@/views/ForgotPasswordView.vue"),
+    meta: { requiresAuth: false },
+  },
+  {
+    path: "/reset-password",
+    name: "reset-password",
+    component: () => import("@/views/ResetPasswordView.vue"),
+    meta: { requiresAuth: false },
+  },
+  {
+    path: "/share/:token",
+    name: "shared-document",
+    component: () => import("@/views/SharedDocumentView.vue"),
+    meta: { requiresAuth: false },
+  },
+  {
+    path: "/privacy",
+    name: "privacy",
+    component: () => import("@/views/PrivacyView.vue"),
+    meta: { requiresAuth: false },
+  },
+  {
+    path: "/legal",
+    name: "legal",
+    component: () => import("@/views/LegalView.vue"),
+    meta: { requiresAuth: false },
+  },
+  {
+    path: "/terms",
+    name: "terms",
+    component: () => import("@/views/TermsView.vue"),
+    meta: { requiresAuth: false },
+  },
+  {
+    path: "/dashboard",
+    name: "dashboard",
+    component: () => import("@/views/DashboardView.vue"),
+    redirect: "/dashboard/documents",
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: "documents",
+        name: "dashboard.documents",
+        component: () => import("@/views/DocumentsView.vue"),
+      },
+      {
+        path: "clients",
+        name: "dashboard.clients",
+        component: () => import("@/views/ClientsView.vue"),
+      },
+      {
+        path: "clients/:id",
+        name: "dashboard.clients.show",
+        component: () => import("@/views/ClientView.vue"),
+      },
+      {
+        path: "profile",
+        name: "dashboard.profile",
+        component: () => import("@/views/ProfileView.vue"),
+      },
+      {
+        path: "settings",
+        name: "dashboard.settings",
+        component: () => import("@/views/SettingsView.vue"),
+      },
+    ],
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "not-found",
+    component: () => import("@/views/NotFoundView.vue"),
+    meta: { requiresAuth: false },
+  },
+];
+
+export default createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  scrollBehavior: () => ({ top: 0 }),
-  routes: [
-    {
-      path: "/",
-      name: "home",
-      component: HomeView,
-      meta: { requiresAuth: false },
-    },
-    {
-      path: "/template",
-      name: "template",
-      component: TemplateView,
-      meta: { requiresAuth: false },
-    },
-    {
-      path: "/login",
-      name: "login",
-      component: LoginView,
-      meta: { requiresAuth: false },
-    },
-    {
-      path: "/register",
-      name: "register",
-      component: RegisterView,
-      meta: { requiresAuth: false },
-    },
-    {
-      path: "/dashboard",
-      name: "dashboard",
-      component: DashboardView,
-      redirect: "/dashboard/documents",
-      meta: { requiresAuth: true },
-      children: [
-        {
-          path: "documents",
-          name: "dashboard.documents",
-          component: DocumentsView,
-        },
-        {
-          path: "profile",
-          name: "dashboard.profile",
-          component: ProfileView,
-        },
-        {
-          path: "settings",
-          name: "dashboard.settings",
-          component: SettingsView,
-        },
-      ],
-    },
-  ],
+  routes,
 });
-
-router.beforeEach(async (to) => {
-  const authStore = useAuthStore();
-
-  if (!authStore.initialized) {
-    await authStore.fetchUser();
-  }
-
-  if (
-    (to.name === "login" || to.name === "register") &&
-    authStore.isAuthenticated
-  ) {
-    return { name: "dashboard" };
-  }
-
-  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
-    return {
-      name: "login",
-      query: { redirect: to.fullPath },
-    };
-  }
-});
-
-export default router;

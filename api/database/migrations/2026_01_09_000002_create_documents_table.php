@@ -10,8 +10,9 @@ return new class extends Migration
     {
         Schema::create('documents', function (Blueprint $table): void {
             $table->uuid('id')->primary();
-            $table->foreignId('template_id')->constrained();
-            $table->foreignUuid('user_id')->nullable()->constrained();
+            $table->foreignId('template_id')->constrained()->restrictOnDelete();
+            $table->foreignUuid('user_id')->constrained()->restrictOnDelete();
+            $table->foreignUuid('client_id')->nullable()->constrained('clients')->nullOnDelete();
             $table->string('name');
             $table->json('data');
             $table->timestamps();

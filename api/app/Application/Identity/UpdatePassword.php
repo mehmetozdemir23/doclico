@@ -24,7 +24,7 @@ final readonly class UpdatePassword
             throw new UserNotFoundException($data->userId);
         }
 
-        if (! $this->passwordHasher->verify($data->currentPassword, $user->password)) {
+        if ($user->password === null || ! $this->passwordHasher->verify($data->currentPassword, $user->password)) {
             throw new InvalidCurrentPasswordException;
         }
 
@@ -36,6 +36,16 @@ final readonly class UpdatePassword
             lastName: $user->lastName,
             email: $user->email,
             password: $hashedPassword,
+            googleId: $user->googleId,
+            companyName: $user->companyName,
+            siret: $user->siret,
+            address: $user->address,
+            phone: $user->phone,
+            mentionsLegales: $user->mentionsLegales,
+            numeroTva: $user->numeroTva,
+            logo: $user->logo,
+            consentAcceptedAt: $user->consentAcceptedAt,
+            consentPolicyVersion: $user->consentPolicyVersion,
         );
 
         $this->userRepository->update($updatedUser);

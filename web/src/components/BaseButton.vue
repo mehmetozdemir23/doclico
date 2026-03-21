@@ -69,7 +69,7 @@ const buttonClasses = computed(() => {
   }[props.variant];
 
   const widthClasses = props.fullWidth ? "w-full" : "";
-  const disabledClasses = props.disabled ? "opacity-50 cursor-not-allowed" : "";
+  const disabledClasses = props.disabled ? "opacity-75 cursor-not-allowed" : "";
 
   return `${baseClasses} ${sizeClasses} ${variantClasses} ${widthClasses} ${disabledClasses}`;
 });

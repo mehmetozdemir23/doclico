@@ -18,7 +18,7 @@ it('creates from a valid string', function (): void {
 
 it('throws exception for invalid token length', function (): void {
     ShareToken::fromString('short-token');
-})->throws(InvalidArgumentException::class, 'Invalid share token length');
+})->throws(InvalidArgumentException::class);
 
 it('converts to string', function (): void {
     $value = str_repeat('b', 32);

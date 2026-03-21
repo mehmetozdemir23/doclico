@@ -22,8 +22,11 @@ final class ShareFactory extends Factory
             'id' => ShareId::generate()->value,
             'token' => ShareToken::generate()->value,
             'expires_at' => null,
+            'shared_at' => now(),
             'downloads_count' => 0,
             'last_downloaded_at' => null,
+            'views_count' => 0,
+            'first_viewed_at' => null,
         ];
     }
 

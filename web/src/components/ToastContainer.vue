@@ -6,15 +6,18 @@
       <div
         v-for="toast in toastStore.toasts"
         :key="toast.id"
+        :role="toast.type === 'error' ? 'alert' : 'status'"
+        :aria-live="toast.type === 'error' ? 'assertive' : 'polite'"
         :class="toastClasses(toast.type)"
         class="pointer-events-auto"
       >
         <p class="text-[13px]">{{ toast.message }}</p>
         <button
           class="ml-3 text-current opacity-60 hover:opacity-100 transition-opacity"
+          aria-label="Fermer"
           @click="toastStore.remove(toast.id)"
         >
-          <X class="w-4 h-4" />
+          <X class="w-4 h-4" aria-hidden="true" />
         </button>
       </div>
     </TransitionGroup>
